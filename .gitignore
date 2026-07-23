@@ -216,3 +216,47 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# 가상환경
+venv/
+.venv/
+env/
+
+# 데이터 (Git에 올리지 않음)
+data/sap_exports/
+data/raw/
+data/samples/
+data/cache/
+*.jpg
+*.jpeg
+*.png
+*.bmp
+
+# 모델 파일
+models/
+*.pt
+*.pth
+*.onnx
+
+# 환경 변수
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# 시스템
+.DS_Store
+Thumbs.db
+
+# 로그
+*.log
+logs/
+
+
+data/sap_exports/
+

@@ -1,0 +1,18 @@
+[
+  {
+    "filename": "SAFE_01_800064879056_20260506082103.jpg",
+    "filepath": "J:/MOBILESMS/IMAGE/20260506/SAFE/01/202605/20260506/9007/SAFE_01_800064879056_20260506082103.jpg",
+    "direct_url": "http://10.157.1.20:8020/image?filepath=J%3A/MOBILESMS/IMAGE/20260506/SAFE/01/202605/20260506/9007/SAFE_01_800064879056_20260506082103.jpg",
+    "success": true,
+    "save_path": "C:\\Users\\00595\\yesco-ai-engine\\yesco-ai-engine\\data\\samples\\SAFE_01_800064879056_20260506082103.jpg",
+    "file_size": 11897,
+    "error": null,
+    "order_no": "800064879056",
+    "inspection_date": "20260506",
+    "inspection_time": "082103",
+    "safe_type": "SAFE_01",
+    "inspection_result": "부적합",
+    "defect_type": "이탈",
+    "facility_type": "보일러"
+  }
+]
