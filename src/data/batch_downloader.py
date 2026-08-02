@@ -31,6 +31,17 @@ class DownloadResult:
     inspection_result: Optional[str] = None  # 정상/부적합
     defect_type: Optional[str] = None        # 이탈/손상
     facility_type: Optional[str] = None      # 보일러/가스레인지
+    # 추가 정보 (yesco-inspection-sampler 에서 받은 것 — 실사 검토 라벨)
+    verdict: Optional[str] = None            # 정상/의심/부적합 (검토 뷰어 판정)
+    result: Optional[str] = None             # 적합/확인요청/미판정
+    comment: Optional[str] = None            # 검토자 코멘트
+    meta_risk_score: Optional[float] = None  # 허위/부실점검 위험도(0~100)
+    distance_diff_m: Optional[float] = None  # GPS 이격 거리(m)
+    duration_min: Optional[float] = None     # 점검 소요 시간(분)
+    labeler: Optional[str] = None            # 라벨링(검토)한 사람
+    labeled_at: Optional[str] = None         # 라벨링(검토) 시각
+    source: Optional[str] = None             # 라벨 출처 (예: yesco-inspection-sampler.ReviewViewer)
+    defect_points_json: Optional[str] = None  # 클릭으로 표시한 문제부위 좌표 (JSON 문자열)
 
 
 def download_one(
@@ -160,8 +171,21 @@ def download_batch(
                 k: v for k, v in item.items()
                 if k not in ("url", "filepath") and v is not None
             }
-            # 인정된 필드만 필터링
-            allowed_keys = {"inspection_result", "defect_type", "facility_type"}
+            # defect_points 는 list[dict] 형태라 dataclass 필드(str)에 맞게 JSON 문자열로 변환
+            if "defect_points" in extra_info and "defect_points_json" not in extra_info:
+                extra_info["defect_points_json"] = json.dumps(
+                    extra_info.pop("defect_points"), ensure_ascii=False
+                )
+            else:
+                extra_info.pop("defect_points", None)
+
+            # 인정된 필드만 필터링 (SAP 유래 필드 + yesco-inspection-sampler 유래 라벨 필드)
+            allowed_keys = {
+                "inspection_result", "defect_type", "facility_type",
+                "verdict", "result", "comment", "meta_risk_score",
+                "distance_diff_m", "duration_min", "labeler", "labeled_at",
+                "source", "defect_points_json",
+            }
             extra_info = {k: v for k, v in extra_info.items() if k in allowed_keys}
             
             future = executor.submit(
